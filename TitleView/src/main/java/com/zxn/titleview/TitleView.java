@@ -53,6 +53,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
                 .inflate(R.layout.afk_title_view, this, true);
 
         ivBack = findViewById(R.id.iv_back);
+        ivBack.setOnClickListener(this);
         tvTitle = findViewById(R.id.tv_title);
 
         TypedArray typedArray
