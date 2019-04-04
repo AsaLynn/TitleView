@@ -166,4 +166,8 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
     public void setOnBackListener(OnBackListener listener) {
         this.mOnBackListener = mOnBackListener;
     }
+
+    public CharSequence getTitleText() {
+        return mTitleText;
+    }
 }
