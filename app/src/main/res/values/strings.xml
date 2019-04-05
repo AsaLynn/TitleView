@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyTitleView</string>
+    <string name="text_service_center">text_service_center</string>
 </resources>

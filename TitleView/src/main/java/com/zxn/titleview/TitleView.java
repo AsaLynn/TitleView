@@ -50,7 +50,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
 
     private void onInit(AttributeSet attrs) {
         LayoutInflater.from(getContext())
-                .inflate(R.layout.afk_title_view, this, true);
+                .inflate(R.layout.layout_title_view, this, true);
 
         ivBack = findViewById(R.id.iv_back);
         ivBack.setOnClickListener(this);
