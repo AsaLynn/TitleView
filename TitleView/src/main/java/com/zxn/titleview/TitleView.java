@@ -24,14 +24,17 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
     TextView tvTitle;
     private int mBackIconId;
     private int mTitleLeftIconId;
+    private int mTitleRightIconId;
     private CharSequence mTitleText = "";
     private ColorStateList mTitleTextColor;
     private Drawable mTitleLeftIconDrawable;
+    private Drawable mTitleRightIconDrawable;
     private int mSize;
     private View mRightView;
     private boolean mBackEnable = true;
 
     private boolean isCanBack = true;
+    private boolean mShowIcon = true;
 
 
     public TitleView(Context context) {
@@ -55,7 +58,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
         ivBack = findViewById(R.id.iv_back);
         ivBack.setOnClickListener(this);
         tvTitle = findViewById(R.id.tv_title);
-
+        tvTitle.setOnClickListener(this);
         TypedArray typedArray
                 = getContext()
                 .obtainStyledAttributes(attrs, R.styleable.TitleView);
@@ -66,11 +69,20 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
             mTitleTextColor = typedArray.getColorStateList(R.styleable.TitleView_titleTextColor);
             //mTitleLeftIconId = typedArray.getResourceId(R.styleable.TitleView_titleLeftIcon, 0);
             mTitleLeftIconDrawable = typedArray.getDrawable(R.styleable.TitleView_titleLeftIcon);
+            mTitleRightIconDrawable = typedArray.getDrawable(R.styleable.TitleView_titleRightIcon);
             mSize = getContext().getResources().getDimensionPixelSize(R.dimen.dp_24);
             if (null != mTitleLeftIconDrawable) {
                 mTitleLeftIconDrawable.setBounds(0, 0, mSize, mSize);
+                tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
             }
-
+            if (null != mTitleRightIconDrawable) {
+//                mTitleRightIconDrawable.setBounds(0, 0, mSize, mSize);
+//                tvTitle.setCompoundDrawables(null, null, mTitleRightIconDrawable, null);
+                tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,
+                        null,
+                        mShowIcon ? mTitleRightIconDrawable : null,
+                        null);
+            }
             if (mBackIconId != 0) {
                 setBackEnabled(true);
                 ivBack.setImageResource(mBackIconId);
@@ -81,9 +93,9 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
             }
 //            tvTitle.setCompoundDrawablesWithIntrinsicBounds(mTitleLeftIconDrawable, 0, 0, 0);
 //            tvTitle.setCompoundDrawablesWithIntrinsicBounds(mTitleLeftIconDrawable, null, null, null);
-            if (null != mTitleLeftIconDrawable) {
-                tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
-            }
+//            if (null != mTitleLeftIconDrawable) {
+//                tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
+//            }
             tvTitle.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.dp_1));
             typedArray.recycle();
         }
@@ -121,13 +133,40 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
         tvTitle.setText(resid);
     }
 
-    public void setTitleLeftIconId(int mTitleLeftIconId) {
+    public void setTitleLeftIconId(@DrawableRes int mTitleLeftIconId) {
         this.mTitleLeftIconId = mTitleLeftIconId;
         //mTitleLeftIconDrawable.setBounds(0,0, mSize, mSize);
         //tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
         tvTitle.setCompoundDrawablesWithIntrinsicBounds(mTitleLeftIconId, 0, 0, 0);
         //tvTitle.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.dp_1));
     }
+
+    public void setTitleRightIconId(@DrawableRes int titleRightIconId) {
+        this.mTitleRightIconId = titleRightIconId;
+        mTitleRightIconDrawable = tvTitle.getResources().getDrawable(mTitleRightIconId);
+        tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,
+                null,
+                mTitleRightIconDrawable,
+                null);
+
+
+        //mTitleLeftIconDrawable.setBounds(0,0, mSize, mSize);
+        //tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
+        //tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, mTitleRightIconId, 0);
+        //tvTitle.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.dp_1));
+    }
+
+    public void showTitleRightIcon(boolean showIcon) {
+        tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,
+                null,
+                showIcon ? mTitleRightIconDrawable : null,
+                null);
+
+        //tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
+//        tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, mTitleRightIconId, 0);
+        //tvTitle.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.dp_1));
+    }
+
 
     public void addRightView(View view) {
         this.mRightView = view;
@@ -155,6 +194,10 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
                 if (getContext() instanceof Activity)
                     ((Activity) getContext()).onBackPressed();
             }
+        } else if (view.getId() == R.id.tv_title) {
+            if (null != mOnTitleClickListener) {
+                mOnTitleClickListener.onClickTitle(view);
+            }
         }
     }
 
@@ -169,5 +212,15 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
 
     public CharSequence getTitleText() {
         return mTitleText;
+    }
+
+    public interface OnTitleClickListener {
+        void onClickTitle(View view);
+    }
+
+    private OnTitleClickListener mOnTitleClickListener;
+
+    public void setOnTitleClickListener(OnTitleClickListener l) {
+        this.mOnTitleClickListener = l;
     }
 }
