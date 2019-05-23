@@ -1,5 +1,5 @@
 # MyTitleView
-一个自定标题的View。
+一个自定义标题控件.
 ```
-implementation 'com.zxn.titleview:TitleView:1.0.3'
+implementation 'com.zxn.titleview:TitleView:1.0.7'
 ```
