@@ -7,5 +7,6 @@
         <attr name="titleTextColor" format="color" />
         <attr name="titleLeftIcon" format="reference" />
         <attr name="titleRightIcon" format="reference" />
+        <attr name="titleTextSize" format="dimension" />
     </declare-styleable>
 </resources>

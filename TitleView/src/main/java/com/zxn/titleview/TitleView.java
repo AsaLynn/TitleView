@@ -6,10 +6,11 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
 
     private boolean isCanBack = true;
     private boolean mShowIcon = true;
+    private int mTitleTextSize;
 
 
     public TitleView(Context context) {
@@ -97,6 +99,12 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
 //                tvTitle.setCompoundDrawables(mTitleLeftIconDrawable, null, null, null);
 //            }
             tvTitle.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.dp_1));
+
+            mTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleView_titleTextSize, sp2px(getContext(), 0));
+            if (mTitleTextSize != 0) {
+                tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
+            }
+
             typedArray.recycle();
         }
     }
@@ -222,5 +230,20 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
 
     public void setOnTitleClickListener(OnTitleClickListener l) {
         this.mOnTitleClickListener = l;
+    }
+
+    /**
+     * 单位转换: sp  px
+     *
+     * @param context context
+     * @param sp      sp
+     * @return px
+     */
+    public static int sp2px(Context context, int sp) {
+        return (int) (getFontDensity(context) * sp + 0.5);
+    }
+
+    public static float getFontDensity(Context context) {
+        return context.getResources().getDisplayMetrics().scaledDensity;
     }
 }

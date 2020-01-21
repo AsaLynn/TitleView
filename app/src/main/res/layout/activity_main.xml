@@ -13,7 +13,8 @@
         android:layout_height="@dimen/main_top_bottom_height"
         android:background="@color/c_00bb9c"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleText="@string/text_service_center"
+        app:titleText="我的前半生"
+        app:titleTextSize="@dimen/sp_20"
         app:titleTextColor="@color/c_ffffff" />
 
     <com.zxn.titleview.TitleView

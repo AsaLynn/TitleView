@@ -3,6 +3,7 @@ package com.zxn.titleviewdemo;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by zxn on 2019-4-11 23:26:07.
