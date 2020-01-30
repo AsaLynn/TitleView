@@ -37,6 +37,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
     private boolean isCanBack = true;
     private boolean mShowIcon = true;
     private int mTitleTextSize;
+    private int mTitleBackgroundId;
 
 
     public TitleView(Context context) {
@@ -72,6 +73,7 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
             //mTitleLeftIconId = typedArray.getResourceId(R.styleable.TitleView_titleLeftIcon, 0);
             mTitleLeftIconDrawable = typedArray.getDrawable(R.styleable.TitleView_titleLeftIcon);
             mTitleRightIconDrawable = typedArray.getDrawable(R.styleable.TitleView_titleRightIcon);
+            mTitleBackgroundId = typedArray.getResourceId(R.styleable.TitleView_titleBackground, 0);
             mSize = getContext().getResources().getDimensionPixelSize(R.dimen.dp_24);
             if (null != mTitleLeftIconDrawable) {
                 mTitleLeftIconDrawable.setBounds(0, 0, mSize, mSize);
@@ -103,6 +105,9 @@ public class TitleView extends RelativeLayout implements View.OnClickListener {
             mTitleTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleView_titleTextSize, sp2px(getContext(), 0));
             if (mTitleTextSize != 0) {
                 tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
+            }
+            if (mTitleBackgroundId != 0) {
+                tvTitle.setBackgroundResource(mTitleBackgroundId);
             }
 
             typedArray.recycle();

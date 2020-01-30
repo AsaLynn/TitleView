@@ -60,4 +60,13 @@
         app:titleText="@string/text_service_center"
         app:titleTextColor="@color/c_ffffff" />
 
+    <com.zxn.titleview.TitleView
+        android:id="@+id/title6"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_top_bottom_height"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        app:titleText="搜索"
+        app:titleBackground="@drawable/sp_rec_r5_c_ffffff"
+        app:titleTextColor="@color/colorPrimaryDark" />
 </LinearLayout>
